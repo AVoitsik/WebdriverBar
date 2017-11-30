@@ -35,8 +35,8 @@ namespace WebdriverBar
                 LogMessageToFile("Cooks",(cookie.Name + "=" + cookie.Value));
             }
 
-            //driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner")).Click();
-            //driver.FindElement(By.LinkText("Выйти")).Click();
+            driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner")).Click();
+            driver.FindElement(By.LinkText("Выйти")).Click();
 
         }
 

@@ -5,3 +5,10 @@ c:\users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\bi
 c:\users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.csprojResolveAssemblyReference.cache
 c:\users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.dll
 c:\users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.pdb
+c:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\WebdriverBar.dll
+c:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\WebdriverBar.pdb
+c:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\WebDriver.dll
+c:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\WebDriver.xml
+c:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.csprojResolveAssemblyReference.cache
+c:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.dll
+c:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.pdb
