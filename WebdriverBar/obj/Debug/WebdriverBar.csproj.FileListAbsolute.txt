@@ -1,0 +1,7 @@
+c:\users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\bin\Debug\WebdriverBar.dll
+c:\users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\bin\Debug\WebdriverBar.pdb
+c:\users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\bin\Debug\WebDriver.dll
+c:\users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\bin\Debug\WebDriver.xml
+c:\users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.csprojResolveAssemblyReference.cache
+c:\users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.dll
+c:\users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.pdb
