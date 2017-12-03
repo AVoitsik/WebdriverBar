@@ -7,8 +7,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
-using OpenQA.Selenium.IE;
-using OpenQA.Selenium.Remote;
+using OzbyLib;
 
 namespace WebdriverBar
 {
@@ -19,26 +18,36 @@ namespace WebdriverBar
         //public static IWebDriver driverSec;
 
         [TestMethod]
-        public void OzCookies()
+        public void OzLoginTest()
         {
-            driver.FindElement(By.ClassName("top-panel__userbar__auth")).Click();
+            LoginPage.GoTo();
+            LoginPage.LoginAs("kotov2003@yahoo.com").WithPassword("529zM3").Login();
+            Assert.IsTrue(MainPage.IsAt, "Faild to Login");
 
+            //CreateCookiesLog();
 
-            driver.FindElement(By.Id("loginFormLoginEmailLink")).Click();
-            driver.FindElement(By.Name("cl_email")).SendKeys("kotov2003@yahoo.com");
-            driver.FindElement(By.Name("cl_psw")).SendKeys("529zM3");
-            driver.FindElement(By.Name("cl_psw")).Submit();
-
-           ReadOnlyCollection<Cookie> collection =  driver.Manage().Cookies.AllCookies;
-            foreach (var cookie in collection)
-            {
-                LogMessageToFile("Cooks",(cookie.Name + "=" + cookie.Value));
-            }
-
-            driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner")).Click();
-            driver.FindElement(By.LinkText("Выйти")).Click();
+            //Exit();
 
         }
+
+        private static void Exit()
+        {
+            driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner")).Click();
+            driver.FindElement(By.LinkText("Выйти")).Click();
+        }
+
+        private void CreateCookiesLog()
+        {
+            ReadOnlyCollection<Cookie> collection = driver.Manage().Cookies.AllCookies;
+            foreach (var cookie in collection)
+            {
+                LogMessageToFile("Cooks", (cookie.Name + "=" + cookie.Value));
+            }
+        }
+
+        
+
+       
 
         public void LogMessageToFile(string fileName, string msg)
         {
@@ -63,14 +72,7 @@ namespace WebdriverBar
         [TestInitialize]
         public void Initialize()
         {
-            ChromeOptions opt = new ChromeOptions();
-            opt.AddArguments(@"user-data-dir=C:\ChromeProfile", "start-maximized");
-
-
-
-            driver = new ChromeDriver(opt);
-            driver.Navigate().GoToUrl("https://oz.by/");
-            driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(30);
+            Driver.Initialize();
 
 
         }
@@ -78,9 +80,10 @@ namespace WebdriverBar
         [TestCleanup]
         public void Cleaup()
         {
-            driver.Close();
-            driver.Quit();
-            driver = null;
+            Driver.Close();
+            //driver.Close();
+            //driver.Quit();
+            //driver = null;
 
         }
     }

@@ -12,3 +12,5 @@ c:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\WebDriver.
 c:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.csprojResolveAssemblyReference.cache
 c:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.dll
 c:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.pdb
+C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\OzbyLib.dll
+C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\OzbyLib.pdb

@@ -1,9 +1,11 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+VisualStudioVersion = 12.0.21005.1
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebdriverBar", "WebdriverBar\WebdriverBar.csproj", "{8A053C5F-9394-471A-8970-255795ECDFE1}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OzbyLib", "OzbyLib\OzbyLib.csproj", "{3185153C-2D05-442D-8BA8-79E17A630435}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +17,10 @@ Global
 		{8A053C5F-9394-471A-8970-255795ECDFE1}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8A053C5F-9394-471A-8970-255795ECDFE1}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8A053C5F-9394-471A-8970-255795ECDFE1}.Release|Any CPU.Build.0 = Release|Any CPU
+		{3185153C-2D05-442D-8BA8-79E17A630435}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{3185153C-2D05-442D-8BA8-79E17A630435}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{3185153C-2D05-442D-8BA8-79E17A630435}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{3185153C-2D05-442D-8BA8-79E17A630435}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
