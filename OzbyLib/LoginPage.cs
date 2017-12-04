@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
@@ -30,6 +31,7 @@ namespace OzbyLib
         {
             private string name;
             private string password;
+            private string phone;
 
             public LoginCommand(string name){
                 this.name=name;
@@ -37,19 +39,37 @@ namespace OzbyLib
 
             public LoginCommand WithPassword(string password)
             {
+                Driver.Instance.FindElement(By.Id("loginFormLoginEmailLink")).Click();
                 this.password = password;
                 return this;
             }
 
+            public LoginCommand WithPhone(string phone)
+            {
+                Driver.Instance.FindElement(By.Id("loginFormLoginPhoneLink")).Click();
+                this.phone = phone;
+                return this;
+            }
+
+            
+
             public void Login()
             {
-                Driver.Instance.FindElement(By.Id("loginFormLoginEmailLink")).Click();
                 Driver.Instance.FindElement(By.Name("cl_email")).SendKeys(name);
                 Driver.Instance.FindElement(By.Name("cl_psw")).SendKeys(password);
                 Driver.Instance.FindElement(By.Name("cl_psw")).Submit();
             }
-        }
 
+            public void GetSMS()
+            {
+                Driver.Instance.FindElement(By.Id("formInputLoginPhone")).SendKeys(phone);
+                Driver.Instance.FindElement(By.CssSelector("#phoneForm button[value=login]")).Click();
+                var check = Driver.Instance.FindElement(By.XPath("//a[.='зарегистрируйтесь']/..")).GetAttribute("textContent");
+                Assert.IsTrue(check == "Этот номер телефона не зарегистрирован. Проверьте его на ошибки, введите другой или зарегистрируйтесь");
+            }
+        }
+        //formInputLoginPhone  id
+        //login  value
 
 
 

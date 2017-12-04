@@ -57,10 +57,10 @@
   </Choose>
   <ItemGroup>
     <Compile Include="OzCookiesClass.cs" />
-    <Compile Include="OZTestsTemplateClass.cs" />
-    <Compile Include="ChromeSettings.cs" />
+    <Compile Include="_research\OZTestsTemplateClass.cs" />
+    <Compile Include="_research\ChromeSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ChromeTests.cs" />
+    <Compile Include="_research\ChromeTests.cs" />
     <Compile Include="TestBase.cs" />
   </ItemGroup>
   <ItemGroup>

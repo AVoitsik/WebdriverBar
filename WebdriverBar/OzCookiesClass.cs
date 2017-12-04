@@ -18,23 +18,28 @@ namespace WebdriverBar
         //public static IWebDriver driverSec;
 
         [TestMethod]
-        public void OzLoginTest()
+        public void OzLoginPwdTest()
         {
             LoginPage.GoTo();
             LoginPage.LoginAs("kotov2003@yahoo.com").WithPassword("529zM3").Login();
             Assert.IsTrue(MainPage.IsAt, "Faild to Login");
-
-            //CreateCookiesLog();
-
-            //Exit();
-
+            MainPage.Exit();
+            //CreateCookiesLog();            
         }
 
-        private static void Exit()
+        [TestMethod]
+        public void OzLoginTelTest()
         {
-            driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner")).Click();
-            driver.FindElement(By.LinkText("Выйти")).Click();
+            LoginPage.GoTo();
+            LoginPage.LoginAs("").WithPhone("297033721").GetSMS();
+            //Add exit           
         }
+
+        //private static void Exit()
+        //{
+        //    driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner")).Click();
+        //    driver.FindElement(By.LinkText("Выйти")).Click();
+        //}
 
         private void CreateCookiesLog()
         {

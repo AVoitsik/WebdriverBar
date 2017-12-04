@@ -14,3 +14,5 @@ c:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\obj\Debug\WebdriverB
 c:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.pdb
 C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\OzbyLib.dll
 C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\OzbyLib.pdb
+C:\Users\alvo\Documents\Visual Studio 2013\Projects\WebdriverBar\WebdriverBar\bin\Debug\OzbyLib.dll
+C:\Users\alvo\Documents\Visual Studio 2013\Projects\WebdriverBar\WebdriverBar\bin\Debug\OzbyLib.pdb
