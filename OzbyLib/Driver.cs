@@ -18,16 +18,35 @@ namespace OzbyLib
         }
 
         public static void Initialize(){
-             ChromeOptions opt = new ChromeOptions();
+            ChromeOptions opt = new ChromeOptions();
             opt.AddArguments(@"user-data-dir=C:\ChromeProfile", "start-maximized");
             Instance = new ChromeDriver(opt);
-            Instance.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+            TurnOnWait();//Instance.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
             Instance.Navigate().GoToUrl(BaseAddress);
         }
 
         public static void Close(){
             Instance.Close();
         }
-        
+
+        public static void NoWaiT(Action action)
+        {
+            TurnOnWait();
+            action();
+            TurnOffWait();
+        }
+
+        public static void TurnOnWait()
+        {
+            Instance.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(5);
+        }
+
+        public static void TurnOffWait()
+        {
+            Instance.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
+        }
+
+
+
     }
 }

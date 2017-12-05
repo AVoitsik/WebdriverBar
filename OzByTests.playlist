@@ -1,0 +1,1 @@
+<Playlist Version="1.0"><Add Test="WebdriverBar.OzCookiesClass.OzLoginPwdTest" /><Add Test="WebdriverBar.OzCookiesClass.OzLoginTelTest" /><Add Test="WebdriverBar.OzCookiesClass.OzLoginWithPhoneTest" /><Add Test="WebdriverBar.OzCookiesClass.LoginWithPwdTest" /><Add Test="WebdriverBar.OzCookiesClass.LoginWithPhoneTest" /></Playlist>

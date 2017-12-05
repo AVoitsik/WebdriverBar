@@ -17,6 +17,7 @@ namespace WebdriverBar
         //public static IWebDriver driverSec;
 
         [TestMethod]
+        [Ignore]
         public void OZTestsTemplate()
         {
             driver.FindElement(By.ClassName("top-panel__userbar__auth")).Click();

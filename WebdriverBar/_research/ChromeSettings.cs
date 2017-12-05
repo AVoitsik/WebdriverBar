@@ -13,6 +13,7 @@ namespace WebdriverBar
     public class ChromeSettings
     {
         [TestMethod]
+        [Ignore]
         public void ChromeOptions()
         {
             //------OBSOLETE----
@@ -98,6 +99,7 @@ namespace WebdriverBar
 
 
         [TestMethod]
+        [Ignore]
         public void TestMethod2()
         {
             ChromeOptions options = new ChromeOptions();
@@ -127,6 +129,7 @@ namespace WebdriverBar
         }
 
         [TestMethod]
+        [Ignore]
         public void ChromeAttrOptsCapsPrefs()
         {
 

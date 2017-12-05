@@ -16,6 +16,7 @@ namespace WebdriverBar
         public static IWebDriver driver;
         public static IWebDriver driverSec;
         [TestMethod]
+        [Ignore]
         public void MultiBrowser()
         {
             driver.FindElement(By.Name("q")).SendKeys("marrysav");

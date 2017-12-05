@@ -1,25 +1,44 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
+using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
 namespace OzbyLib
 {
-    public class LoginPage
+    public class LoginPage:Helper
     {
 
 
         public static void GoTo()
         {
             Driver.Instance.FindElement(By.ClassName("top-panel__userbar__auth")).Click();
+            Assert.IsTrue(IsElementPresent(Driver.Instance, By.Id("loginPopupIntro")));//NoSuchElementException
+            Assert.IsTrue(IsElementHasRightText(Driver.Instance, By.Id("loginPopupIntro"), "Вход"));//NoSuchElementException
             var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(5));
-            var check1 = wait.Until(d => d.FindElement(By.Id("loginPopupIntro")).Text=="Вход");
-           var check2 = wait.Until(d => d.SwitchTo().ActiveElement().GetAttribute("id") == "formInputLoginPhone");
+            Assert.IsTrue(wait.Until(d => d.SwitchTo().ActiveElement().GetAttribute("id") == "formInputLoginPhone"));
+
+            /*          ---DIFFERENT WAITS PRACTICE----
+                        ReadOnlyCollection<IWebElement> elements = null;
+                        Driver.NoWaiT(() => elements =Driver.Instance.FindElements(By.Id("loginPopupIntro")));
+             * 
+                        wait.Until(ExpectedConditions.ElementIsVisible(By.Id("loginPopupIntro")));  //WebDriverTimeout exception
+                        wait.Until(ExpectedConditions.ElementExists(By.Id("loginPopupIntro"))); //WebDriverTimeout exception
+                        wait.Until(d => d.FindElement(By.Id("loginPopupIntro")));   //NoSuchElementException
+                        Assert.IsTrue(IsElementPresentA(Driver.Instance, By.Id("loginPopupIntro")));    //NoSuchElementException           
+                       Assert.IsTrue(wait_e(Driver.Instance,5).Until(d => d.SwitchTo().ActiveElement().GetAttribute("id") == "formInputLoginPhone"));
+
+                       Assert.IsTrue(IsElementPresent(Driver.Instance, By.Id("loginPopupIntroВ")));//NoSuchElementException
+                       Assert.IsTrue(IsElementHasRightText(Driver.Instance, By.Id("loginPopupIntro"), "Вход"));//NoSuchElementException
+                       var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(5));
+                       Assert.IsTrue(wait.Until(d => d.SwitchTo().ActiveElement().GetAttribute("id") == "formInputLoginPhone"));
+             * */
         }
 
         public static LoginCommand LoginAs(string name)
@@ -81,23 +100,67 @@ namespace OzbyLib
 
         public static void Close()
         {
-            //Check all options:http://automated-testing.info/t/oshibki-v-chrome-element-is-not-clickable-at-point/1689/16
-            //https://stackoverflow.com/questions/11908249/debugging-element-is-not-clickable-at-point-error
-            //https://stackoverflow.com/questions/38923356/element-is-not-clickable-at-point-other-element-would-receive-the-click
-            //https://github.com/seleniumhq/selenium-google-code-issue-archive/issues/2766
-            //https://github.com/SeleniumHQ/selenium/issues/1867
-       // https://github.com/SeleniumHQ/selenium/issues/2077
-            //http://learn-automation.com/how-to-solve-element-is-not-clickable-at-pointxy-in-selenium/
 
-
-            //SECOND OPTION
+            //***FIRST OPTION***
+            //
             //System.Threading.Thread.Sleep(5000);
-           var el = Driver.Instance.FindElement(By.CssSelector("div#loginPopup > div[data-popup-state=first] > a[href='https://oz.by']"));
+            var closeButton=Driver.Instance.FindElement(By.CssSelector("div#loginPopup > div[data-popup-state=first] > a[href='https://oz.by']"));
+            //closeButton.Click();
+            //*****************
 
-           el.Click();
-            //FIRST OPTION
-  //          IList<IWebElement> links = (IList<IWebElement>)((IJavaScriptExecutor)Driver.Instance)
-  //.ExecuteScript("arguments[0].click()", el);
+            //***SECOND OPTION***
+            //
+            //((IJavaScriptExecutor)Driver.Instance).ExecuteScript("arguments[0].click()", closeButton);
+            //******************
+
+            //***THIRD OPTION***
+            //
+            //IList<IWebElement> links =
+            //    (IList<IWebElement>)
+            //        ((IJavaScriptExecutor)Driver.Instance).ExecuteScript(
+            //            "arguments[0].scrollIntoView(true);arguments[0].click()", closeButton);
+            //
+            //*****************
+
+
+
+            //**Repeating clicks!!!...CHECK!
+
+
+            //FAILED OPTIONS
+            /*--------ACTIONS didn't help--------------
+            Actions actions = new Actions(Driver.Instance);
+            actions.MoveToElement(closeButton).Click().Perform();
+            ----------------------------------------*/
+
+            /*-IsVisibleOrNote didn't help---
+     var block = By.CssSelector("div.i-popup.i-popup_compact.i-popup_large");           
+     WebDriverWait wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(5));
+     var el = wait.Until(ExpectedConditions.InvisibilityOfElementLocated(block));
+     --------------------------------*/
+
+
+
+
+            /*Из опыта:
+1) бывает div которая накрывает страницу во время загрузки - тогда надо дождатся чтобы исчез
+2) или div типа шапки сайта (как на этом сайте) накрыл вашу кнопку - тогда надо заскролится до элемента
+             * 
+             * private void scrollToElementAndClick(WebElement element) { 
+int yScrollPosition = element.getLocation().getY(); 
+js.executeScript("window.scroll(0, " + yScrollPosition + ");"); 
+element.click(); }
+if you need you could also add in a static offset (if for example you have a page header that is 200px high and always displayed):
+
+public static final int HEADER_OFFSET = 200; 
+private void scrollToElementAndClick(WebElement element) { 
+int yScrollPosition = element.getLocation().getY() - HEADER-OFFSET; 
+js.executeScript("window.scroll(0, " + yScrollPosition + ");"); 
+element.click(); 
+}
+             */
+
+
 
 
         }

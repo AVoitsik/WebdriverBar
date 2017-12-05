@@ -8,6 +8,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
 using OzbyLib;
+using OpenQA.Selenium.Support;
 
 namespace WebdriverBar
 {
@@ -18,7 +19,7 @@ namespace WebdriverBar
         //public static IWebDriver driverSec;
 
         [TestMethod]
-        public void OzLoginPwdTest()
+        public void LoginWithPwdTest()
         {
             LoginPage.GoTo();
             LoginPage.LoginAs("kotov2003@yahoo.com").WithPassword("529zM3").Login();
@@ -28,7 +29,7 @@ namespace WebdriverBar
         }
 
         [TestMethod]
-        public void OzLoginTelTest()
+        public void LoginWithPhoneTest()
         {
             LoginPage.GoTo();
             LoginPage.LoginAs("").WithPhone("297033721").GetSMS();
@@ -36,11 +37,6 @@ namespace WebdriverBar
             //Add exit           
         }
 
-        //private static void Exit()
-        //{
-        //    driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner")).Click();
-        //    driver.FindElement(By.LinkText("Выйти")).Click();
-        //}
 
         private void CreateCookiesLog()
         {
