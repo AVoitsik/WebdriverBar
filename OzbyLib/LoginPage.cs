@@ -77,6 +77,29 @@ namespace OzbyLib
             //driver.FindElement(By.Name("cl_email")).SendKeys("kotov2003@yahoo.com");
             //driver.FindElement(By.Name("cl_psw")).SendKeys("529zM3");
             //driver.FindElement(By.Name("cl_psw")).Submit();
-        
+
+
+        public static void Close()
+        {
+            //Check all options:http://automated-testing.info/t/oshibki-v-chrome-element-is-not-clickable-at-point/1689/16
+            //https://stackoverflow.com/questions/11908249/debugging-element-is-not-clickable-at-point-error
+            //https://stackoverflow.com/questions/38923356/element-is-not-clickable-at-point-other-element-would-receive-the-click
+            //https://github.com/seleniumhq/selenium-google-code-issue-archive/issues/2766
+            //https://github.com/SeleniumHQ/selenium/issues/1867
+       // https://github.com/SeleniumHQ/selenium/issues/2077
+            //http://learn-automation.com/how-to-solve-element-is-not-clickable-at-pointxy-in-selenium/
+
+
+            //SECOND OPTION
+            //System.Threading.Thread.Sleep(5000);
+           var el = Driver.Instance.FindElement(By.CssSelector("div#loginPopup > div[data-popup-state=first] > a[href='https://oz.by']"));
+
+           el.Click();
+            //FIRST OPTION
+  //          IList<IWebElement> links = (IList<IWebElement>)((IJavaScriptExecutor)Driver.Instance)
+  //.ExecuteScript("arguments[0].click()", el);
+
+
+        }
     }
 }

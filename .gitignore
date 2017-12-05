@@ -6,3 +6,5 @@ WebdriverBar.v12.suo
 WebdriverBar.v12.suo
 OzbyLib/bin/Debug/$RANDOM_SEED$
 *.cache
+*.cache
+OzbyLib/obj/Debug/DesignTimeResolveAssemblyReferencesInput.cache

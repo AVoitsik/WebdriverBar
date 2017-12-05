@@ -32,6 +32,7 @@ namespace WebdriverBar
         {
             LoginPage.GoTo();
             LoginPage.LoginAs("").WithPhone("297033721").GetSMS();
+            LoginPage.Close();
             //Add exit           
         }
 
