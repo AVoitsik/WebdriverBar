@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
@@ -18,7 +19,15 @@ namespace OzFramework
             get
             {
                 var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(5));
-                var searchEdit = wait.Until(d => d.SwitchTo().ActiveElement().GetAttribute("id") == "top-s");
+                try
+                {
+                    var searchEdit = wait.Until(d => d.SwitchTo().ActiveElement().GetAttribute("id") == "top-s");
+
+                }
+                catch (StaleElementReferenceException ex)
+                {
+                    MessageBox.Show("Ошибка!");
+                }
                 var loginName = Driver.Instance.FindElement(By.CssSelector("ul.top-panel__userbar li.top-panel__userbar_withdrop span>span")).Text=="alexey.voitsyk";
                  var searchEdit2 = Driver.Instance.SwitchTo().ActiveElement().GetAttribute("id") == "top-s";
                 return loginName;
@@ -49,6 +58,44 @@ namespace OzFramework
             Actions actions2 = new Actions(Driver.Instance).MoveToElement(ordersLink).Click(); 
             actions2.Perform();
             wait.Until(ExpectedConditions.TitleIs("Мои заказы — OZ.by"));
+        }
+
+        public static void checkPopupList()
+        {
+            IWebElement loginName = Driver.Instance.FindElement(By.ClassName("top-panel__userbar__user__name__inner"));
+            By popup = By.CssSelector("ul#mobile-userbar");
+            By linksList = By.CssSelector("ul#mobile-userbar .top-panel__userbar__ppnav__name");
+            IReadOnlyCollection<IWebElement> list = Driver.Instance.FindElements(linksList);
+            List<string> expected = new List<string>() { "Заказы", "Лента событий", "Состояние счёта", "Персональная скидка", "Подписки" };
+                     
+            Actions actions = new Actions(Driver.Instance).MoveToElement(loginName);
+            actions.Perform();
+
+            WebDriverWait wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(5));
+            wait.Until(ExpectedConditions.ElementIsVisible(popup));
+
+            List<string> actual = new List<string>();
+            foreach (var item in list)
+            {
+                actual.Add(item.Text);
+                //spisok_after.Add(item.Text);
+                //spisok_after.Add((item.Displayed).ToString());
+                //spisok_after.Add((item.Enabled).ToString());
+                //spisok_after.Add((item.Selected).ToString());
+                //spisok_after.Add((item.GetAttribute("hidden")));//hidden
+                //spisok_after.Add((item.GetAttribute("outerHTML")));//hidden
+                //spisok_after.Add((item.GetAttribute("textContent")));//hidden
+                //spisok_after.Add((item.GetCssValue("visibility")));
+                //spisok_after.Add((item.GetCssValue("display")));
+                //spisok_after.Add((item.GetCssValue("opacity")));
+                //Заказы
+                //Лента событий
+                //Состояние счёта
+                //Персональная скидка
+                //Подписки
+            }
+
+            Assert.IsTrue(expected.Except(actual).Count() == 0);
         }
     }
 }

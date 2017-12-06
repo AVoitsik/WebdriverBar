@@ -9,3 +9,14 @@ C:\Users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\ob
 C:\Users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.pdb
 C:\Users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\bin\Debug\WebDriver.Support.dll
 C:\Users\alvo\documents\visual studio 2013\Projects\WebdriverBar\WebdriverBar\bin\Debug\WebDriver.Support.xml
+C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\WebdriverBar.dll
+C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\WebdriverBar.pdb
+C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\OzbyLib.dll
+C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\WebDriver.dll
+C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\WebDriver.Support.dll
+C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\OzbyLib.pdb
+C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\WebDriver.xml
+C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\bin\Debug\WebDriver.Support.xml
+C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\obj\Debug\OzTests.csprojResolveAssemblyReference.cache
+C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.dll
+C:\Users\ehealth\Documents\GitHub\WebdriverBar\WebdriverBar\obj\Debug\WebdriverBar.pdb

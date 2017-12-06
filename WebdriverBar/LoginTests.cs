@@ -43,7 +43,8 @@ namespace OzTests
             LoginPage.GoTo();
             LoginPage.LoginAs("kotov2003@yahoo.com").WithPassword("529zM3").Login();
             Assert.IsTrue(MainPage.IsAt, "Faild to Login");
-            MainPage.GoToOrders();
+            //MainPage.GoToOrders();
+            MainPage.checkPopupList();
             MainPage.Exit();
             //CreateCookiesLog();            
         }
