@@ -10,7 +10,7 @@ using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
 
-namespace OzbyLib
+namespace OzFramework
 {
     public class LoginPage:Helper
     {
@@ -110,7 +110,7 @@ namespace OzbyLib
 
             //***SECOND OPTION***
             //
-            //((IJavaScriptExecutor)Driver.Instance).ExecuteScript("arguments[0].click()", closeButton);
+            ((IJavaScriptExecutor)Driver.Instance).ExecuteScript("arguments[0].click()", closeButton);
             //******************
 
             //***THIRD OPTION***

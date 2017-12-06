@@ -7,7 +7,7 @@ using OpenQA.Selenium.Firefox;
 using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
 
-namespace WebdriverBar
+namespace OzTests
 {
     [TestClass]
     public class ChromeSettings

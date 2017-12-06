@@ -15,4 +15,4 @@ C:\Users\alvo\Documents\Visual Studio 2013\Projects\WebdriverBar\OzbyLib\bin\Deb
 C:\Users\alvo\Documents\Visual Studio 2013\Projects\WebdriverBar\OzbyLib\bin\Debug\WebDriver.Support.xml
 C:\Users\alvo\Documents\Visual Studio 2013\Projects\WebdriverBar\OzbyLib\obj\Debug\OzbyLib.dll
 C:\Users\alvo\Documents\Visual Studio 2013\Projects\WebdriverBar\OzbyLib\obj\Debug\OzbyLib.pdb
-C:\Users\alvo\Documents\Visual Studio 2013\Projects\WebdriverBar\OzbyLib\obj\Debug\OzbyLib.csprojResolveAssemblyReference.cache
+C:\Users\alvo\documents\visual studio 2013\Projects\WebdriverBar\OzbyLib\obj\Debug\OzbyLib.csprojResolveAssemblyReference.cache

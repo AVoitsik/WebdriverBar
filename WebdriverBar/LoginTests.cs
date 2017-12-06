@@ -7,13 +7,13 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium.Firefox;
-using OzbyLib;
+using OzFramework;
 using OpenQA.Selenium.Support;
 
-namespace WebdriverBar
+namespace OzTests
 {
     [TestClass]
-    public class OzCookiesClass
+    public class LoginTests
     {
         public static IWebDriver driver;
         //public static IWebDriver driverSec;
@@ -37,6 +37,21 @@ namespace WebdriverBar
             //Add exit           
         }
 
+        [TestMethod]
+        public void CheckOrdersTest()
+        {
+            LoginPage.GoTo();
+            LoginPage.LoginAs("kotov2003@yahoo.com").WithPassword("529zM3").Login();
+            Assert.IsTrue(MainPage.IsAt, "Faild to Login");
+            MainPage.GoToOrders();
+            MainPage.Exit();
+            //CreateCookiesLog();            
+        }
+
+
+
+
+
 
         private void CreateCookiesLog()
         {
@@ -47,9 +62,6 @@ namespace WebdriverBar
             }
         }
 
-        
-
-       
 
         public void LogMessageToFile(string fileName, string msg)
         {
@@ -83,6 +95,7 @@ namespace WebdriverBar
         public void Cleaup()
         {
             Driver.Close();
+            Driver.Quit();
             //driver.Close();
             //driver.Quit();
             //driver = null;

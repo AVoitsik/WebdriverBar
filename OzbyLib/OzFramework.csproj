@@ -7,7 +7,7 @@
     <ProjectGuid>{3185153C-2D05-442D-8BA8-79E17A630435}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>OzbyLib</RootNamespace>
+    <RootNamespace>OzFramework</RootNamespace>
     <AssemblyName>OzbyLib</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>

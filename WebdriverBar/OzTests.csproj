@@ -6,7 +6,7 @@
     <ProjectGuid>{8A053C5F-9394-471A-8970-255795ECDFE1}</ProjectGuid>
     <OutputType>Library</OutputType>
     <AppDesignerFolder>Properties</AppDesignerFolder>
-    <RootNamespace>WebdriverBar</RootNamespace>
+    <RootNamespace>OzTests</RootNamespace>
     <AssemblyName>WebdriverBar</AssemblyName>
     <TargetFrameworkVersion>v4.5</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
@@ -56,7 +56,7 @@
     </Otherwise>
   </Choose>
   <ItemGroup>
-    <Compile Include="OzCookiesClass.cs" />
+    <Compile Include="LoginTests.cs" />
     <Compile Include="_research\OZTestsTemplateClass.cs" />
     <Compile Include="_research\ChromeSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -67,9 +67,9 @@
     <None Include="packages.config" />
   </ItemGroup>
   <ItemGroup>
-    <ProjectReference Include="..\OzbyLib\OzbyLib.csproj">
+    <ProjectReference Include="..\OzbyLib\OzFramework.csproj">
       <Project>{3185153c-2d05-442d-8ba8-79e17a630435}</Project>
-      <Name>OzbyLib</Name>
+      <Name>OzFramework</Name>
     </ProjectReference>
   </ItemGroup>
   <Choose>

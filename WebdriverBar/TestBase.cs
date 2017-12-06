@@ -4,9 +4,9 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using OzbyLib;
+using OzFramework;
 
-namespace WebdriverBar
+namespace OzTests
 {
     public class TestBase
     {
