@@ -10,7 +10,7 @@ using OpenQA.Selenium.Remote;
 
 namespace OzTests
 {
-    [TestClass]
+   // [TestClass]
     public class ChromeTests
     {
         public static IWebDriver driver;

@@ -8,8 +8,18 @@ using OpenQA.Selenium.Support.UI;
 
 namespace OzFramework
 {
-    public class Helper
+    public class Page
     {
+        protected IWebDriver driver;
+        protected WebDriverWait wait;
+        protected Page(IWebDriver driver)
+        {
+            this.driver = driver;
+            this.wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+        }
+
+
+
         public static bool IsElementPresent(IWebDriver driver, By locator)
         {
             try
@@ -52,7 +62,7 @@ namespace OzFramework
         public static WebDriverWait wait_e(IWebDriver driver, int sec)
         {
 
-            return new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(sec));            
+            return new WebDriverWait(driver, TimeSpan.FromSeconds(sec));            
 
         }
 

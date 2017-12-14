@@ -6,7 +6,6 @@ C:\Users\alvo\documents\visual studio 2013\Projects\WebdriverBar\OzbyLib\bin\Deb
 C:\Users\alvo\documents\visual studio 2013\Projects\WebdriverBar\OzbyLib\bin\Debug\WebDriver.Support.xml
 C:\Users\alvo\documents\visual studio 2013\Projects\WebdriverBar\OzbyLib\obj\Debug\OzbyLib.dll
 C:\Users\alvo\documents\visual studio 2013\Projects\WebdriverBar\OzbyLib\obj\Debug\OzbyLib.pdb
-C:\Users\alvo\documents\visual studio 2013\Projects\WebdriverBar\OzbyLib\obj\Debug\OzFramework.csprojResolveAssemblyReference.cache
 C:\Users\ehealth\Documents\GitHub\WebdriverBar\OzbyLib\bin\Debug\OzbyLib.dll
 C:\Users\ehealth\Documents\GitHub\WebdriverBar\OzbyLib\bin\Debug\OzbyLib.pdb
 C:\Users\ehealth\Documents\GitHub\WebdriverBar\OzbyLib\bin\Debug\WebDriver.dll
@@ -16,3 +15,4 @@ C:\Users\ehealth\Documents\GitHub\WebdriverBar\OzbyLib\bin\Debug\WebDriver.Suppo
 C:\Users\ehealth\Documents\GitHub\WebdriverBar\OzbyLib\obj\Debug\OzFramework.csprojResolveAssemblyReference.cache
 C:\Users\ehealth\Documents\GitHub\WebdriverBar\OzbyLib\obj\Debug\OzbyLib.dll
 C:\Users\ehealth\Documents\GitHub\WebdriverBar\OzbyLib\obj\Debug\OzbyLib.pdb
+C:\Users\alvo\Documents\Visual Studio 2013\Projects\WebdriverBar\OzbyLib\obj\Debug\OzFramework.csprojResolveAssemblyReference.cache

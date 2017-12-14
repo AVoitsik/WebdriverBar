@@ -8,17 +8,19 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
+using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
 
 namespace OzFramework
 {
-    public class MainPage:Helper
+    public class MainPage:Page
     {
-        public static bool IsAt
+        public MainPage (IWebDriver driver) : base(driver) { }
+        public  bool IsAt
         {
             get
             {
-                var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(5));
+                var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
                 try
                 {
                     var searchEdit = wait.Until(d => d.SwitchTo().ActiveElement().GetAttribute("id") == "top-s");
@@ -28,50 +30,51 @@ namespace OzFramework
                 {
                     MessageBox.Show("Ошибка!");
                 }
-                var loginName = Driver.Instance.FindElement(By.CssSelector("ul.top-panel__userbar li.top-panel__userbar_withdrop span>span")).Text=="alexey.voitsyk";
-                 var searchEdit2 = Driver.Instance.SwitchTo().ActiveElement().GetAttribute("id") == "top-s";
+                var loginName = driver.FindElement(By.CssSelector("ul.top-panel__userbar li.top-panel__userbar_withdrop span>span")).Text == "alexey.voitsyk";
+                var searchEdit2 = driver.SwitchTo().ActiveElement().GetAttribute("id") == "top-s";
                 return loginName;
             }
         }
 
-        public static void Exit()
+        public  void Exit()
         {
-            Driver.Instance.FindElement(By.ClassName("top-panel__userbar__user__name__inner")).Click();
-            Driver.Instance.FindElement(By.LinkText("Выйти")).Click();
-            Assert.IsTrue(IsElementPresent(Driver.Instance, By.CssSelector("a.top-panel__userbar__auth")));
+            driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner")).Click();
+            driver.FindElement(By.LinkText("Выйти")).Click();
+            Assert.IsTrue(IsElementPresent(driver, By.CssSelector("a.top-panel__userbar__auth")));
         }
 
-        public static void GoToOrders()
+        public  void GoToOrders()
         {
-            var loginName = Driver.Instance.FindElement(By.ClassName("top-panel__userbar__user__name__inner"));
+            var loginName = driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner"));
             var ordersLinkBy = By.XPath("//span[.='Заказы']");
-            var ordersLink = Driver.Instance.FindElement(ordersLinkBy);
-            
-            Actions actions = new Actions(Driver.Instance).MoveToElement(loginName);
+            var ordersLink = driver.FindElement(ordersLinkBy);
+
+            Actions actions = new Actions(driver).MoveToElement(loginName);
             actions.Perform();
 
-            WebDriverWait wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(5));
+            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             wait.Until(ExpectedConditions.ElementIsVisible(ordersLinkBy));
             //--ALTERNATIVE WAY--//
             //wait.Until(d=>d.FindElement(ordersLinkBy).GetCssValue("visibility")=="visible");
-            
-            Actions actions2 = new Actions(Driver.Instance).MoveToElement(ordersLink).Click(); 
+
+            Actions actions2 = new Actions(driver).MoveToElement(ordersLink).Click(); 
             actions2.Perform();
             wait.Until(ExpectedConditions.TitleIs("Мои заказы — OZ.by"));
         }
 
-        public static void checkPopupList()
+        public  void checkPopupList()
         {
-            IWebElement loginName = Driver.Instance.FindElement(By.ClassName("top-panel__userbar__user__name__inner"));
+            IWebElement loginName = driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner"));
             By popup = By.CssSelector("ul#mobile-userbar");
             By linksList = By.CssSelector("ul#mobile-userbar .top-panel__userbar__ppnav__name");
-            IReadOnlyCollection<IWebElement> list = Driver.Instance.FindElements(linksList);
+            IReadOnlyCollection<IWebElement> list = driver.FindElements(linksList);
             List<string> expected = new List<string>() { "Заказы", "Лента событий", "Состояние счёта", "Персональная скидка", "Подписки" };
-                     
-            Actions actions = new Actions(Driver.Instance).MoveToElement(loginName);
+
+            Actions actions = new Actions(driver).MoveToElement(loginName).Click();
             actions.Perform();
 
-            WebDriverWait wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(5));
+            //((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", loginName);
+
             wait.Until(ExpectedConditions.ElementIsVisible(popup));
 
             List<string> actual = new List<string>();

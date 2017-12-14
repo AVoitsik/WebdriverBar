@@ -10,10 +10,11 @@ namespace OzTests
 {
     public class TestBase
     {
+        public Application app;
         [TestInitialize]
         public void Initialize()
         {
-            Driver.Initialize();
+            app = new Application();
 
 
         }
@@ -21,7 +22,9 @@ namespace OzTests
         [TestCleanup]
         public void Cleaup()
         {
-            Driver.Close();
+            app.Close();
+            app.Quit();
+            app = null;
             //driver.Close();
             //driver.Quit();
             //driver = null;
