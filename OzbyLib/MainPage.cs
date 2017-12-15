@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -21,17 +22,10 @@ namespace OzFramework
             get
             {
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-                try
-                {
-                    var searchEdit = wait.Until(d => d.SwitchTo().ActiveElement().GetAttribute("id") == "top-s");
 
-                }
-                catch (StaleElementReferenceException ex)
-                {
-                    MessageBox.Show("Ошибка!");
-                }
-                var loginName = driver.FindElement(By.CssSelector("ul.top-panel__userbar li.top-panel__userbar_withdrop span>span")).Text == "alexey.voitsyk";
                 var searchEdit2 = driver.SwitchTo().ActiveElement().GetAttribute("id") == "top-s";
+                var loginName = FindElement(driver, By.CssSelector("ul.top-panel__userbar li.top-panel__userbar_withdrop span>span")).Text == "alexey.voitsyk";
+
                 return loginName;
             }
         }
@@ -39,7 +33,8 @@ namespace OzFramework
         public  void Exit()
         {
             driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner")).Click();
-            driver.FindElement(By.LinkText("Выйти")).Click();
+            FindElement(driver, By.LinkText("Выйти")).Click();
+           //wait.Until(d=>d.FindElement(By.LinkText("Выйти"))).Click();
             Assert.IsTrue(IsElementPresent(driver, By.CssSelector("a.top-panel__userbar__auth")));
         }
 
@@ -64,41 +59,23 @@ namespace OzFramework
 
         public  void checkPopupList()
         {
-            IWebElement loginName = driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner"));
+            List<string> expected = new List<string>() { "Заказы", "Лента событий", "Состояние счёта", "Персональная скидка", "Подписки" };           
+
+            IWebElement loginName = driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner"));          
+            Actions actions = new Actions(driver).MoveToElement(loginName);
+            actions.Perform();
             By popup = By.CssSelector("ul#mobile-userbar");
             By linksList = By.CssSelector("ul#mobile-userbar .top-panel__userbar__ppnav__name");
             IReadOnlyCollection<IWebElement> list = driver.FindElements(linksList);
-            List<string> expected = new List<string>() { "Заказы", "Лента событий", "Состояние счёта", "Персональная скидка", "Подписки" };
-
-            Actions actions = new Actions(driver).MoveToElement(loginName).Click();
-            actions.Perform();
-
-            //((IJavaScriptExecutor)driver).ExecuteScript("arguments[0].scrollIntoView(true);", loginName);
-
             wait.Until(ExpectedConditions.ElementIsVisible(popup));
-
+            
             List<string> actual = new List<string>();
             foreach (var item in list)
             {
-                actual.Add(item.Text);
-                //spisok_after.Add(item.Text);
-                //spisok_after.Add((item.Displayed).ToString());
-                //spisok_after.Add((item.Enabled).ToString());
-                //spisok_after.Add((item.Selected).ToString());
-                //spisok_after.Add((item.GetAttribute("hidden")));//hidden
-                //spisok_after.Add((item.GetAttribute("outerHTML")));//hidden
-                //spisok_after.Add((item.GetAttribute("textContent")));//hidden
-                //spisok_after.Add((item.GetCssValue("visibility")));
-                //spisok_after.Add((item.GetCssValue("display")));
-                //spisok_after.Add((item.GetCssValue("opacity")));
-                //Заказы
-                //Лента событий
-                //Состояние счёта
-                //Персональная скидка
-                //Подписки
+                actual.Add(item.GetAttribute("textContent"));
             }
 
-            Assert.IsTrue(expected.Except(actual).Count() == 0);
+            Assert.IsTrue(expected.Any(x => actual.Contains(x)));
         }
     }
 }

@@ -19,7 +19,7 @@ namespace OzFramework
         public  void GoTo()
         {
             driver.FindElement(By.ClassName("top-panel__userbar__auth")).Click();
-            Assert.IsTrue(IsElementPresent(driver, By.Id("loginPopupIntro")));//NoSuchElementException
+            //Assert.IsTrue(IsElementPresent(driver, By.Id("loginPopupIntro")));//NoSuchElementException
             Assert.IsTrue(IsElementHasRightText(driver, By.Id("loginPopupIntro"), "Вход"));//NoSuchElementException
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             Assert.IsTrue(wait.Until(d => d.SwitchTo().ActiveElement().GetAttribute("id") == "formInputLoginPhone"));
@@ -46,7 +46,7 @@ namespace OzFramework
             return new LoginCommand(driver,wait,name);
         }
 
-        public class LoginCommand
+        public class LoginCommand:Page
         {
             private IWebDriver driver;
             private WebDriverWait wait;
@@ -63,6 +63,7 @@ namespace OzFramework
 
             public LoginCommand WithPassword(string password)
             {
+                //FindElement(driver, By.Id("loginFormLoginEmailLink"),20).Click();
                 driver.FindElement(By.Id("loginFormLoginEmailLink")).Click();
                 this.password = password;
                 return this;

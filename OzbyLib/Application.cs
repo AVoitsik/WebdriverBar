@@ -8,6 +8,7 @@ using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Firefox;
+using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Remote;
 using OpenQA.Selenium.Support.UI;
 
@@ -27,8 +28,12 @@ namespace OzFramework
             //options.AddArguments(@"user-data-dir=C:\ChromeProfile", "start-maximized");
             //driver = new ChromeDriver(options);
 
-            FirefoxOptions options = new FirefoxOptions();
-            driver = new FirefoxDriver();
+            //FirefoxOptions options = new FirefoxOptions();
+            //driver = new FirefoxDriver();
+            //driver.Manage().Window.Maximize();
+
+            InternetExplorerOptions options = new InternetExplorerOptions();
+            driver = new InternetExplorerDriver();
             driver.Manage().Window.Maximize();
 
 
@@ -106,11 +111,7 @@ namespace OzFramework
             driver.Manage().Timeouts().ImplicitWait = TimeSpan.FromSeconds(0);
         }
 
-        public static void Wait(TimeSpan fromSeconds)
-        {
-            System.Threading.Thread.Sleep((int)fromSeconds.TotalSeconds * 1000);
-            //Thread.Sleep(fromSeconds);
-        } 
+        
         #endregion
 
         #region COOKIES&FILES

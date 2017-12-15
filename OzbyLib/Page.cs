@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -18,40 +19,34 @@ namespace OzFramework
             this.wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
         }
 
+        protected Page()
+        {
+        }
 
 
-        public static bool IsElementPresent(IWebDriver driver, By locator)
+
+        public bool IsElementPresent(IWebDriver driver, By locator)
         {
             try
             {
-                driver.FindElement(locator);
+                var check = wait.Timeout;
+                wait.Until(ExpectedConditions.ElementExists(locator));
+                //wait.Until(d => d.FindElement(locator));
+                //driver.FindElement(locator);
                 return true;
             }
             catch (NoSuchElementException ex)
             {
                 return false;
-            }   
+            }
         }
 
-        public static bool IsElementPresentA(IWebDriver driver, By locator)
+        public bool IsElementPresentA(IWebDriver driver, By locator)
         {
             try
             {
                 return driver.FindElements(locator).Count > 0;
-                
-            }
-            catch (NoSuchElementException ex)
-            { 
-                return false;
-            }
-        }
 
-        public static bool IsElementHasRightText(IWebDriver driver, By locator, string expected_text)
-        {
-
-            try
-            {                
-                return driver.FindElement(locator).Text == expected_text;                
             }
             catch (NoSuchElementException ex)
             {
@@ -59,13 +54,31 @@ namespace OzFramework
             }
         }
 
-        public static WebDriverWait wait_e(IWebDriver driver, int sec)
+        public bool IsElementHasRightText(IWebDriver driver, By locator, string expected_text)
         {
 
-            return new WebDriverWait(driver, TimeSpan.FromSeconds(sec));            
-
+            try
+            {
+                return driver.FindElement(locator).Text == expected_text;
+            }
+            catch (NoSuchElementException ex)
+            {
+                return false;
+            }
         }
 
+        public void WaitABit(TimeSpan fromSeconds)
+        {
+            System.Threading.Thread.Sleep((int)fromSeconds.TotalSeconds * 1000);
+            //Thread.Sleep(fromSeconds);
+        }
+
+        protected IWebElement FindElement(IWebDriver driver, By by, int timeoutInSeconds = 10)
+        {
+            var waits = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
+
+                return waits.Until(ExpectedConditions.ElementExists(by));                           
+        }
 
     }
 }
