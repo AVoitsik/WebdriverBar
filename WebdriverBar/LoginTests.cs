@@ -1,59 +1,35 @@
-﻿using System;
-using System.Collections.ObjectModel;
-using System.Security.Policy;
-using System.Threading;
-using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿using NUnit.Framework;
 
-using OpenQA.Selenium;
-using OpenQA.Selenium.Chrome;
-using OpenQA.Selenium.Firefox;
-using OzFramework;
-using OpenQA.Selenium.Support;
 
 namespace OzTests
 {
-    [TestClass]
+    [TestFixture]
     public class LoginTests:TestBase
-    {
-        //public  IWebDriver driver;
-
-
-        [TestMethod]
-        public void LoginWithPwdTest()
+    {        
+        //[TestCase("kotov2003@yahoo.com", "529zM3")]
+        //public void LoginWithPwdTest(string login, string pwd)
+        [Test,TestCaseSource(typeof(DataProviders),"ValidCustomers")]
+        public void LoginWithPwdTest(Customer customer)
         {
-            app.LoginWithPwd();
-            //LoginPage.GoTo();
-            //LoginPage.LoginAs("kotov2003@yahoo.com").WithPassword("529zM3").Login();
-            //Assert.IsTrue(MainPage.IsAt, "Faild to Login");
-            
-            ////CreateCookiesLog(); 
-            app.Exit();
-            //MainPage.Exit();
+            app.LoginWithPwd(customer.login, customer.password);           
+            //CreateCookiesLog(); 
+            app.Logout();
         }
 
-
-        [TestMethod]
+        [Test]
         public void LoginWithPhoneTest()
         {
             app.LoginWithPhone();
-            //LoginPage.GoTo();
-            //LoginPage.LoginAs("").WithPhone("297033721").GetSMS();
-            //LoginPage.Close();
-            ////Add exit           
         }
 
-        [TestMethod]
+        [Test]
+        //No FF
         public void CheckOrdersTest()
         {
             app.LoginWithPwd();
-            //LoginPage.GoTo();
-            //LoginPage.LoginAs("kotov2003@yahoo.com").WithPassword("529zM3").Login();
-            //Assert.IsTrue(MainPage.IsAt, "Faild to Login");
-            ////MainPage.GoToOrders();
-            app.CheckPopupList();
-            //MainPage.checkPopupList();
-            app.Exit();
-            //MainPage.Exit();
+            //MainPage.GoToOrders();
+            app.CheckPopupList();            
+            app.Logout();           
             //CreateCookiesLog();            
         }
 

@@ -22,15 +22,16 @@ namespace OzFramework
             get
             {
                 var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-
-                var searchEdit2 = driver.SwitchTo().ActiveElement().GetAttribute("id") == "top-s";
+                ////wait.Until(d=>d.SwitchTo().ActiveElement().GetAttribute("id") == "top-s"); ->Stale reffrernce issue
+                //var check = driver.SwitchTo().ActiveElement();
+                //wait.Until(ExpectedConditions.StalenessOf(check));                    
+                //wait.Until(d => d.SwitchTo().ActiveElement().GetAttribute("id") == "top-s");  -> ISSUE in FF on ActiveElement(can't convert to object)
                 var loginName = FindElement(driver, By.CssSelector("ul.top-panel__userbar li.top-panel__userbar_withdrop span>span")).Text == "alexey.voitsyk";
-
                 return loginName;
             }
         }
 
-        public  void Exit()
+        public  void Logout()
         {
             driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner")).Click();
             FindElement(driver, By.LinkText("Выйти")).Click();
@@ -40,42 +41,40 @@ namespace OzFramework
 
         public  void GoToOrders()
         {
-            var loginName = driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner"));
-            var ordersLinkBy = By.XPath("//span[.='Заказы']");
-            var ordersLink = driver.FindElement(ordersLinkBy);
+            IWebElement loginNameLink = driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner"));            
+            Actions moveCursorToLoginName = new Actions(driver).MoveToElement(loginNameLink);
+            moveCursorToLoginName.Perform();
 
-            Actions actions = new Actions(driver).MoveToElement(loginName);
-            actions.Perform();
+            By ordersPopupLinkBy = By.XPath("//span[.='Заказы']");
+            WebDriverWait waitForPopupMenu= new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            waitForPopupMenu.Until(ExpectedConditions.ElementIsVisible(ordersPopupLinkBy)); //ALTERNATIVE//wait.Until(d=>d.FindElement(ordersLinkBy).GetCssValue("visibility")=="visible");
 
-            WebDriverWait wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-            wait.Until(ExpectedConditions.ElementIsVisible(ordersLinkBy));
-            //--ALTERNATIVE WAY--//
-            //wait.Until(d=>d.FindElement(ordersLinkBy).GetCssValue("visibility")=="visible");
-
-            Actions actions2 = new Actions(driver).MoveToElement(ordersLink).Click(); 
-            actions2.Perform();
+            IWebElement ordersPopupLink = driver.FindElement(ordersPopupLinkBy);
+            Actions clickOrdersPopupLink = new Actions(driver).MoveToElement(ordersPopupLink).Click();
+            clickOrdersPopupLink.Perform();
             wait.Until(ExpectedConditions.TitleIs("Мои заказы — OZ.by"));
         }
 
         public  void checkPopupList()
         {
-            List<string> expected = new List<string>() { "Заказы", "Лента событий", "Состояние счёта", "Персональная скидка", "Подписки" };           
-
-            IWebElement loginName = driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner"));          
-            Actions actions = new Actions(driver).MoveToElement(loginName);
-            actions.Perform();
-            By popup = By.CssSelector("ul#mobile-userbar");
-            By linksList = By.CssSelector("ul#mobile-userbar .top-panel__userbar__ppnav__name");
-            IReadOnlyCollection<IWebElement> list = driver.FindElements(linksList);
-            wait.Until(ExpectedConditions.ElementIsVisible(popup));
+            List<string> expectedPopupLinks = new List<string>() { "Заказы", "Лента событий", "Состояние счёта", "Персональная скидка", "Подписки" };            
             
-            List<string> actual = new List<string>();
-            foreach (var item in list)
+            IWebElement loginNameLink = driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner"));
+            Actions moveCursorToLoginName = new Actions(driver).MoveToElement(loginNameLink);
+            moveCursorToLoginName.Perform();
+            
+            By popupMenuBy = By.CssSelector("ul#mobile-userbar");
+            By popupMenulinksListBy = By.CssSelector("ul#mobile-userbar .top-panel__userbar__ppnav__name");
+            IReadOnlyCollection<IWebElement> popupMenulinksList = driver.FindElements(popupMenulinksListBy);
+            wait.Until(ExpectedConditions.ElementIsVisible(popupMenuBy));
+            
+            List<string> actualPopupLinks = new List<string>();
+            foreach (var item in popupMenulinksList)
             {
-                actual.Add(item.GetAttribute("textContent"));
+                actualPopupLinks.Add(item.GetAttribute("textContent"));
             }
 
-            Assert.IsTrue(expected.Any(x => actual.Contains(x)));
+            Assert.IsTrue(expectedPopupLinks.Any(link => actualPopupLinks.Contains(link)));
         }
     }
 }

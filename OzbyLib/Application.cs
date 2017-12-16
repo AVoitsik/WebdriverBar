@@ -22,19 +22,24 @@ namespace OzFramework
         private MainPage MainPage;
         private OrdersPage OrdersPage;
 
+        private string BaseAddress
+        {
+            get { return "https://oz.by/"; }
+        }
+
         public Application()
         {
-            //ChromeOptions options = new ChromeOptions();
-            //options.AddArguments(@"user-data-dir=C:\ChromeProfile", "start-maximized");
-            //driver = new ChromeDriver(options);
+            ChromeOptions options = new ChromeOptions();
+            options.AddArguments(@"user-data-dir=C:\ChromeProfile", "start-maximized");
+            driver = new ChromeDriver(options);
 
             //FirefoxOptions options = new FirefoxOptions();
             //driver = new FirefoxDriver();
             //driver.Manage().Window.Maximize();
 
-            InternetExplorerOptions options = new InternetExplorerOptions();
-            driver = new InternetExplorerDriver();
-            driver.Manage().Window.Maximize();
+            //InternetExplorerOptions options = new InternetExplorerOptions();
+            //driver = new InternetExplorerDriver();
+            //driver.Manage().Window.Maximize();
 
 
             LoginPage = new LoginPage(driver);
@@ -44,10 +49,7 @@ namespace OzFramework
             TurnOffWait();
         }
 
-        private string BaseAddress
-        {
-            get { return "https://oz.by/"; }
-        }
+        
 
         #region INITIALIZE HIDDEN
         public void Initialize()
@@ -83,6 +85,7 @@ namespace OzFramework
         //ehealth@ubuntu:~$ xvfb-run java -Dwebdriver.chrome.driver=/usr/local/bin/chromedriver -jar /usr/local/bin/selenium-server-standalone.jar -role node -port 5559 -hub http://192.168.117.69:4444/wd/hub -capabilities browserName=firefox,maxInstances=3 -capabilities browserName=chrome,maxInstances=3
         
         #endregion
+        #region CLOSE&QUIT
         public void Close()
         {
             driver.Close();
@@ -91,8 +94,8 @@ namespace OzFramework
         public void Quit()
         {
             driver.Quit();
-        }
-
+        } 
+        #endregion
         #region WAITS
         public void NoWaiT(Action action)
         {
@@ -113,7 +116,6 @@ namespace OzFramework
 
         
         #endregion
-
         #region COOKIES&FILES
         private void CreateCookiesLog()
         {
@@ -146,16 +148,17 @@ namespace OzFramework
         } 
         #endregion
 
-        public void LoginWithPwd()
+        public void LoginWithPwd(string login = "kotov2003@yahoo.com", string passwd = "529zM3")
         {
             LoginPage.GoTo();
-            LoginPage.LoginAs("kotov2003@yahoo.com").WithPassword("529zM3").Login();
+            //LoginPage.LoginAs("kotov2003@yahoo.com").WithPassword("529zM3").Login();
+            LoginPage.LoginAs(login).WithPassword(passwd).Login();
             Assert.IsTrue(MainPage.IsAt, "Faild to Login");
         }
 
-        public void Exit()
+        public void Logout()
         {
-            MainPage.Exit();
+            MainPage.Logout();
         }
 
         public void LoginWithPhone()

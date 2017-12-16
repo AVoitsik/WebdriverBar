@@ -1,25 +1,25 @@
-﻿using Microsoft.VisualStudio.TestTools.UnitTesting;
+﻿//using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using OzFramework;
+using NUnit.Framework;
 
 namespace OzTests
 {
+    [TestFixture]
     public class TestBase
     {
         public Application app;
-        [TestInitialize]
+        [SetUp]
         public void Initialize()
         {
             app = new Application();
-
-
         }
 
-        [TestCleanup]
+        [TearDown]
         public void Cleaup()
         {
             app.Close();
@@ -28,7 +28,6 @@ namespace OzTests
             //driver.Close();
             //driver.Quit();
             //driver = null;
-
         }
     }
 }

@@ -9,104 +9,154 @@ using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.UI;
+using OpenQA.Selenium.Support.PageObjects;
 
 namespace OzFramework
 {
     public class LoginPage:Page
     {
-        public LoginPage(IWebDriver driver):base(driver){}
+        private string name;
+        private string password;
+        private string phone;
+
+        [FindsBy(How = How.Name, Using = "cl_email")]
+        internal IWebElement EmailInput;
+
+        [FindsBy(How = How.Name, Using = "cl_psw")]
+        internal IWebElement PasswordInput;
+
+        [FindsBy(How = How.Id, Using = "formInputLoginPhone")]
+        internal IWebElement PhoneInput;
+
+        [FindsBy(How = How.Id, Using = "loginFormLoginEmailLink")]
+        internal IWebElement EmailPasswordLoginTab;
+
+        [FindsBy(How = How.Id, Using = "loginFormLoginPhoneLink")]
+        internal IWebElement PhoneLoginTab;
+
+        [FindsBy(How = How.CssSelector, Using = "#phoneForm button[value=login]")]
+        internal IWebElement PhoneLoginButton;
+
+
+        public LoginPage(IWebDriver driver) : base(driver)
+        {
+            PageFactory.InitElements(driver,this);
+        }
 
         public  void GoTo()
         {
-            driver.FindElement(By.ClassName("top-panel__userbar__auth")).Click();
+            FindElement(driver,By.ClassName("top-panel__userbar__auth")).Click();//top-panel__userbar__auth
             //Assert.IsTrue(IsElementPresent(driver, By.Id("loginPopupIntro")));//NoSuchElementException
             Assert.IsTrue(IsElementHasRightText(driver, By.Id("loginPopupIntro"), "Вход"));//NoSuchElementException
             var wait = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
             Assert.IsTrue(wait.Until(d => d.SwitchTo().ActiveElement().GetAttribute("id") == "formInputLoginPhone"));
-
-            /*          ---DIFFERENT WAITS PRACTICE----
-                        ReadOnlyCollection<IWebElement> elements = null;
-                        Driver.NoWaiT(() => elements =Driver.Instance.FindElements(By.Id("loginPopupIntro")));
-             * 
-                        wait.Until(ExpectedConditions.ElementIsVisible(By.Id("loginPopupIntro")));  //WebDriverTimeout exception
-                        wait.Until(ExpectedConditions.ElementExists(By.Id("loginPopupIntro"))); //WebDriverTimeout exception
-                        wait.Until(d => d.FindElement(By.Id("loginPopupIntro")));   //NoSuchElementException
-                        Assert.IsTrue(IsElementPresentA(Driver.Instance, By.Id("loginPopupIntro")));    //NoSuchElementException           
-                       Assert.IsTrue(wait_e(Driver.Instance,5).Until(d => d.SwitchTo().ActiveElement().GetAttribute("id") == "formInputLoginPhone"));
-
-                       Assert.IsTrue(IsElementPresent(Driver.Instance, By.Id("loginPopupIntroВ")));//NoSuchElementException
-                       Assert.IsTrue(IsElementHasRightText(Driver.Instance, By.Id("loginPopupIntro"), "Вход"));//NoSuchElementException
-                       var wait = new WebDriverWait(Driver.Instance, TimeSpan.FromSeconds(5));
-                       Assert.IsTrue(wait.Until(d => d.SwitchTo().ActiveElement().GetAttribute("id") == "formInputLoginPhone"));
-             * */
         }
 
-        public  LoginCommand LoginAs(string name)
+        public LoginPage LoginAs(string name)
         {
-            return new LoginCommand(driver,wait,name);
+            this.name = name;
+            return this;
         }
 
-        public class LoginCommand:Page
+        public LoginPage WithPassword(string password)
         {
-            private IWebDriver driver;
-            private WebDriverWait wait;
-            private string name;
-            private string password;
-            private string phone;
-
-            public LoginCommand(IWebDriver driver, WebDriverWait wait, string name)
-            {
-                this.name=name;
-                this.driver = driver;
-                this.wait = wait;
-            }
-
-            public LoginCommand WithPassword(string password)
-            {
-                //FindElement(driver, By.Id("loginFormLoginEmailLink"),20).Click();
-                driver.FindElement(By.Id("loginFormLoginEmailLink")).Click();
-                this.password = password;
-                return this;
-            }
-
-            public LoginCommand WithPhone(string phone)
-            {
-                driver.FindElement(By.Id("loginFormLoginPhoneLink")).Click();
-                this.phone = phone;
-                return this;
-            }
-
-            
-
-            public void Login()
-            {
-                driver.FindElement(By.Name("cl_email")).SendKeys(name);
-                driver.FindElement(By.Name("cl_psw")).SendKeys(password);
-                driver.FindElement(By.Name("cl_psw")).Submit();
-            }
-
-            public void GetSMS()
-            {
-                driver.FindElement(By.Id("formInputLoginPhone")).SendKeys(phone);
-                driver.FindElement(By.CssSelector("#phoneForm button[value=login]")).Click();
-                //wait.Until(d=>d.FindElement(By.XPath("//a[.='зарегистрируйтесь']/..")));
-                var check = wait.Until(ExpectedConditions.ElementExists(By.XPath("//a[.='зарегистрируйтесь']/.."))).GetAttribute("textContent");
-
-                //var check = driver.FindElement(By.XPath("//a[.='зарегистрируйтесь']/..")).GetAttribute("textContent");
-                Assert.IsTrue(check == "Этот номер телефона не зарегистрирован. Проверьте его на ошибки, введите другой или зарегистрируйтесь");
-            }
+            EmailPasswordLoginTab.Click();
+            this.password = password;
+            return this;
         }
+
+        public LoginPage WithPhone(string phone)
+        {
+            PhoneLoginTab.Click();
+            this.phone = phone;
+            return this;
+        }
+
+        public void Login()
+        {
+            EmailInput.SendKeys(name);
+            PasswordInput.SendKeys(password);
+            PasswordInput.Submit();
+        }
+
+        public void GetSMS()
+        {
+            PhoneInput.SendKeys(phone);
+            PhoneLoginButton.Click();
+
+            var errorMessage = wait.Until(ExpectedConditions.ElementExists(By.XPath("//a[.='зарегистрируйтесь']/.."))).GetAttribute("textContent");
+            Assert.IsTrue(errorMessage == "Этот номер телефона не зарегистрирован. Проверьте его на ошибки, введите другой или зарегистрируйтесь");
+        }
+
+
+        #region !!!DEPRICATED_OLD_LOGIN
+
+        //public LoginCommand LoginAs(string name)
+        //{
+        //    return new LoginCommand(driver, wait, name);
+        //}
+        //public class LoginCommand : Page
+        //{
+        //    private IWebDriver driver;
+        //    private WebDriverWait wait;
+        //    private string name;
+        //    private string password;
+        //    private string phone;
+
+        //    public LoginCommand(IWebDriver driver, WebDriverWait wait, string name)
+        //    {
+        //        this.name = name;
+        //        this.driver = driver;
+        //        this.wait = wait;
+        //    }
+
+            //public LoginCommand WithPassword(string password)
+            //{
+            //    //FindElement(driver, By.Id("loginFormLoginEmailLink"),20).Click();
+            //    driver.FindElement(By.Id("loginFormLoginEmailLink")).Click();
+            //    this.password = password;
+            //    return this;
+            //}
+
+            //public LoginCommand WithPhone(string phone)
+            //{
+            //    driver.FindElement(By.Id("loginFormLoginPhoneLink")).Click();
+            //    this.phone = phone;
+            //    return this;
+            //}
+
+
+
+            //public void Login()
+            //{
+            //    driver.FindElement(By.Name("cl_email")).SendKeys(name);
+            //    driver.FindElement(By.Name("cl_psw")).SendKeys(password);
+            //    driver.FindElement(By.Name("cl_psw")).Submit();
+            //}
+
+            //public void GetSMS()
+            //{
+            //    driver.FindElement(By.Id("formInputLoginPhone")).SendKeys(phone);
+            //    driver.FindElement(By.CssSelector("#phoneForm button[value=login]")).Click();
+            //    //wait.Until(d=>d.FindElement(By.XPath("//a[.='зарегистрируйтесь']/..")));
+            //    var check = wait.Until(ExpectedConditions.ElementExists(By.XPath("//a[.='зарегистрируйтесь']/.."))).GetAttribute("textContent");
+
+            //    //var check = driver.FindElement(By.XPath("//a[.='зарегистрируйтесь']/..")).GetAttribute("textContent");
+            //    Assert.IsTrue(check == "Этот номер телефона не зарегистрирован. Проверьте его на ошибки, введите другой или зарегистрируйтесь");
+            //}
+        //}
         //formInputLoginPhone  id
         //login  value
 
 
 
-            //driver.FindElement(By.Id("loginFormLoginEmailLink")).Click();
-            //driver.FindElement(By.Name("cl_email")).SendKeys("kotov2003@yahoo.com");
-            //driver.FindElement(By.Name("cl_psw")).SendKeys("529zM3");
-            //driver.FindElement(By.Name("cl_psw")).Submit();
+        //driver.FindElement(By.Id("loginFormLoginEmailLink")).Click();
+        //driver.FindElement(By.Name("cl_email")).SendKeys("kotov2003@yahoo.com");
+        //driver.FindElement(By.Name("cl_psw")).SendKeys("529zM3");
+        //driver.FindElement(By.Name("cl_psw")).Submit();
 
 
+        #endregion
         public  void Close()
         {
 
