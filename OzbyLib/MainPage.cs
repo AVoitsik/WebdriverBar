@@ -4,10 +4,11 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-using System.Windows.Forms;
+//using System.Windows.Forms;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using OpenQA.Selenium.Chrome;
 using OpenQA.Selenium;
+using OpenQA.Selenium.IE;
 using OpenQA.Selenium.Interactions;
 using OpenQA.Selenium.Support.Extensions;
 using OpenQA.Selenium.Support.UI;
@@ -39,42 +40,68 @@ namespace OzFramework
             Assert.IsTrue(IsElementPresent(driver, By.CssSelector("a.top-panel__userbar__auth")));
         }
 
-        public  void GoToOrders()
+        public OrdersPage GoToOrdersPageViaMenuOverLoginName()
         {
-            IWebElement loginNameLink = driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner"));            
-            Actions moveCursorToLoginName = new Actions(driver).MoveToElement(loginNameLink);
-            moveCursorToLoginName.Perform();
-
-            By ordersPopupLinkBy = By.XPath("//span[.='Заказы']");
-            WebDriverWait waitForPopupMenu= new WebDriverWait(driver, TimeSpan.FromSeconds(5));
-            waitForPopupMenu.Until(ExpectedConditions.ElementIsVisible(ordersPopupLinkBy)); //ALTERNATIVE//wait.Until(d=>d.FindElement(ordersLinkBy).GetCssValue("visibility")=="visible");
-
-            IWebElement ordersPopupLink = driver.FindElement(ordersPopupLinkBy);
-            Actions clickOrdersPopupLink = new Actions(driver).MoveToElement(ordersPopupLink).Click();
-            clickOrdersPopupLink.Perform();
-            wait.Until(ExpectedConditions.TitleIs("Мои заказы — OZ.by"));
+            By popupMenuItemBy = By.XPath("//span[.='Заказы']");
+            ClickPopupMenuItem(popupMenuItemBy);
+            return new OrdersPage(driver);
         }
 
-        public  void checkPopupList()
+        public DiscountPage GoToDiscountPageViaMenuOverLoginName()
         {
-            List<string> expectedPopupLinks = new List<string>() { "Заказы", "Лента событий", "Состояние счёта", "Персональная скидка", "Подписки" };            
-            
+            By popupMenuItemBy = By.XPath("//span[.='Персональная скидка']");
+            ClickPopupMenuItem(popupMenuItemBy);
+            return new DiscountPage(driver);
+        }
+
+        private void ClickPopupMenuItem(By popupMenuItemBy)
+        {
+            WebDriverWait waitForPopupMenu = new WebDriverWait(driver, TimeSpan.FromSeconds(5));
+            waitForPopupMenu.Until(
+                ExpectedConditions
+                    .ElementIsVisible(
+                        popupMenuItemBy)); //ALTERNATIVE//wait.Until(d=>d.FindElement(ordersLinkBy).GetCssValue("visibility")=="visible");
+
+            IWebElement ordersPopupLink = driver.FindElement(popupMenuItemBy);
+            Actions clickOrdersPopupLink = new Actions(driver).MoveToElement(ordersPopupLink).Click();
+            clickOrdersPopupLink.Perform();
+        }
+
+
+        public void VerifyMenuOverLoginName()
+        {
+            List<string> expectedMenuItems = new List<string>() { "Заказы", "Лента событий", "Состояние счёта", "Персональная скидка", "Подписки" };
+
+            By popupMenuBy = By.CssSelector("ul#mobile-userbar");
+            By popupMenuItemListBy = By.CssSelector("ul#mobile-userbar .top-panel__userbar__ppnav__name");
+            IReadOnlyCollection<IWebElement> popupMenuItemList = driver.FindElements(popupMenuItemListBy);
+            wait.Until(ExpectedConditions.ElementIsVisible(popupMenuBy));
+            List<string> actualMenuItems = new List<string>();
+            foreach (var item in popupMenuItemList)
+            {
+                actualMenuItems.Add(item.GetAttribute("textContent"));
+            }
+            Assert.IsTrue(expectedMenuItems.Any(item => actualMenuItems.Contains(item)));
+        }
+
+        public MainPage ShowMenuOverLoginname()
+        {
             IWebElement loginNameLink = driver.FindElement(By.ClassName("top-panel__userbar__user__name__inner"));
             Actions moveCursorToLoginName = new Actions(driver).MoveToElement(loginNameLink);
             moveCursorToLoginName.Perform();
-            
-            By popupMenuBy = By.CssSelector("ul#mobile-userbar");
-            By popupMenulinksListBy = By.CssSelector("ul#mobile-userbar .top-panel__userbar__ppnav__name");
-            IReadOnlyCollection<IWebElement> popupMenulinksList = driver.FindElements(popupMenulinksListBy);
-            wait.Until(ExpectedConditions.ElementIsVisible(popupMenuBy));
-            
-            List<string> actualPopupLinks = new List<string>();
-            foreach (var item in popupMenulinksList)
-            {
-                actualPopupLinks.Add(item.GetAttribute("textContent"));
-            }
+            return this;
+        }
 
-            Assert.IsTrue(expectedPopupLinks.Any(link => actualPopupLinks.Contains(link)));
+        public SearchPage SearchFor(string book)
+        {
+            IWebElement searchField = driver.FindElement(By.Id("top-s"));
+            searchField.SendKeys(book);
+            //serachButton.SendKeys(Keys.Enter);
+            IWebElement searchButton = driver.FindElement(By.ClassName("top-panel__search__btn"));
+            searchButton.Click();
+            return new SearchPage(driver);
         }
     }
+
+
 }

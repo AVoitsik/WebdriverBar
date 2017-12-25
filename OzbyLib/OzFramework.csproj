@@ -52,11 +52,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Application.cs" />
+    <Compile Include="DiscountPage.cs" />
     <Compile Include="Page.cs" />
     <Compile Include="LoginPage.cs" />
     <Compile Include="MainPage.cs" />
     <Compile Include="OrdersPage.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="SearchPage.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

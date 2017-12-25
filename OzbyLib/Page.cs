@@ -73,7 +73,7 @@ namespace OzFramework
             //Thread.Sleep(fromSeconds);
         }
 
-        protected IWebElement FindElement(IWebDriver driver, By by, int timeoutInSeconds = 10)
+        protected IWebElement FindElement(IWebDriver driver, By by, int timeoutInSeconds = 60)
         {
             var waits = new WebDriverWait(driver, TimeSpan.FromSeconds(timeoutInSeconds));
 

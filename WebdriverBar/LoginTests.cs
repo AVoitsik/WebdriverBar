@@ -11,7 +11,7 @@ namespace OzTests
         [Test,TestCaseSource(typeof(DataProviders),"ValidCustomers")]
         public void LoginWithPwdTest(Customer customer)
         {
-            app.LoginWithPwd(customer.login, customer.password);           
+            app.LoginWithPwd(customer.Login, customer.Password);           
             //CreateCookiesLog(); 
             app.Logout();
         }
@@ -24,14 +24,15 @@ namespace OzTests
 
         [Test]
         //No FF
-        public void CheckOrdersTest()
+        public void CheckMenuOverLoginnameTest()
         {
             app.LoginWithPwd();
-            //MainPage.GoToOrders();
-            app.CheckPopupList();            
+            app.CheckMenuOverLoginname();            
             app.Logout();           
             //CreateCookiesLog();            
         }
+
+
 
 
     }

@@ -18,9 +18,12 @@ namespace OzFramework
     public class Application
     {
         private IWebDriver driver;
-        private LoginPage LoginPage;
-        private MainPage MainPage;
-        private OrdersPage OrdersPage;
+        private LoginPage loginPage;
+        private MainPage mainPage;
+        private OrdersPage ordersPage;
+        private DiscountPage discountPage;
+        private SearchPage searchPage;
+
 
         private string BaseAddress
         {
@@ -42,9 +45,11 @@ namespace OzFramework
             //driver.Manage().Window.Maximize();
 
 
-            LoginPage = new LoginPage(driver);
-            MainPage = new MainPage(driver);
-            OrdersPage = new OrdersPage(driver);
+            loginPage = new LoginPage(driver);
+            mainPage = new MainPage(driver);
+            ordersPage = new OrdersPage(driver);
+            discountPage = new DiscountPage(driver);
+            searchPage = new SearchPage(driver);
             driver.Navigate().GoToUrl(BaseAddress);
             TurnOffWait();
         }
@@ -150,30 +155,57 @@ namespace OzFramework
 
         public void LoginWithPwd(string login = "kotov2003@yahoo.com", string passwd = "529zM3")
         {
-            LoginPage.GoTo();
+            loginPage.GoTo();
             //LoginPage.LoginAs("kotov2003@yahoo.com").WithPassword("529zM3").Login();
-            LoginPage.LoginAs(login).WithPassword(passwd).Login();
-            Assert.IsTrue(MainPage.IsAt, "Faild to Login");
+            loginPage.LoginAs(login).WithPassword(passwd).Login();
+            Assert.IsTrue(mainPage.IsAt, "Faild to Login");
         }
 
         public void Logout()
         {
-            MainPage.Logout();
+            mainPage.Logout();
         }
 
         public void LoginWithPhone()
         {
-            LoginPage.GoTo();
-            LoginPage.LoginAs("").WithPhone("297033721").GetSMS();
-            LoginPage.Close();
+            loginPage.GoTo();
+            loginPage.LoginAs("").WithPhone("297033721").GetSMS();
+            loginPage.Close();
             
         }
 
-        public void CheckPopupList()
+        public void CheckMenuOverLoginname()
         {
-            MainPage.checkPopupList();            
+            mainPage.ShowMenuOverLoginname().VerifyMenuOverLoginName();
         }
 
+        public void CheckGoToOrdersPageViaMenuOverLoginname()
+        {
+            mainPage.ShowMenuOverLoginname().GoToOrdersPageViaMenuOverLoginName().VerifyIsAtOrdersPage();
+        }
 
+        public void CheckSidebarMenuOnOrdersPage()
+        {
+            mainPage.ShowMenuOverLoginname().GoToOrdersPageViaMenuOverLoginName().VerifyIsAtOrdersPage()
+                .VerifySidebarMenu();
+        }
+
+        public void CheckGoToDiscountPageViaSidebarMenu()
+        {
+            mainPage.ShowMenuOverLoginname().GoToOrdersPageViaMenuOverLoginName().VerifyIsAtOrdersPage()
+                .GoToDiscountPage().VerifyIsAtDiscountPage();
+        }
+
+        public void CheckGoToDiscountPageViaMenuOverLoginname()
+        {
+            mainPage.ShowMenuOverLoginname().GoToDiscountPageViaMenuOverLoginName().VerifyIsAtDiscountPage();
+        }
+
+        public void SearchBookTest(string book, string count)
+        {
+            mainPage.SearchFor(book);
+            searchPage.VerifyIsAtSearchPage(book);
+                searchPage.CheckNumberOfFoundItems(book, count);
+        }
     }
 }

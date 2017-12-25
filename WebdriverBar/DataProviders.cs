@@ -14,14 +14,26 @@ namespace OzTests
             {
                 yield return new Customer()
                 {
-                    login = "kotov2003@yahoo.com",
-                    password = "529zM3"
+                    Login = "kotov2003@yahoo.com",
+                    Password = "529zM3"
                 };
                 //yield return new Customer()
                 //{
                 //    login = "kotov2005@yahoo.com",
                 //    password = "529zM5"
                 //};
+            }
+        }
+
+        public static IEnumerable<SearchData> ValidSearchData
+        {
+            get
+            {
+                yield return new SearchData()
+                {
+                    ItemToSearch = "JavaScript",
+                    NumberOfFoundItems = "28"
+                };
             }
         }
     }

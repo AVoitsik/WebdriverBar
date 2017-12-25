@@ -63,7 +63,11 @@
   <ItemGroup>
     <Compile Include="Customer.cs" />
     <Compile Include="DataProviders.cs" />
+    <Compile Include="DiscountTests.cs" />
     <Compile Include="LoginTests.cs" />
+    <Compile Include="OrdersTest.cs" />
+    <Compile Include="SearchData.cs" />
+    <Compile Include="SearchTests.cs" />
     <Compile Include="_research\OZTestsTemplateClass.cs" />
     <Compile Include="_research\ChromeSettings.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

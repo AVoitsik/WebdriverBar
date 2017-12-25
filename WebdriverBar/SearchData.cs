@@ -6,9 +6,9 @@ using System.Threading.Tasks;
 
 namespace OzTests
 {
-    public class Customer
+    public class SearchData
     {
-        public string Login { get; internal set; }
-        public string Password { get; internal set; }
+        public string ItemToSearch { get; internal set; }
+        public string NumberOfFoundItems { get; internal set; }
     }
 }
